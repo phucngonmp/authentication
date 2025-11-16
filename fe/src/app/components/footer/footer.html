@@ -1,0 +1,50 @@
+<!-- footer.component.html -->
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Company Info Section -->
+    <div class="footer-section company-info">
+      <div class="logo">
+        <span class="logo-icon">🌱</span>
+        <h3 class="company-name">{{ companyInfo.name }}</h3>
+      </div>
+      <p class="company-description">{{ companyInfo.description }}</p>
+      <div class="contact-info">
+        <p class="contact-item">
+          <span class="contact-icon">✉️</span>
+          <a href="mailto:{{ companyInfo.email }}">{{ companyInfo.email }}</a>
+        </p>
+        <p class="contact-item">
+          <span class="contact-icon">📞</span>
+          <a href="tel:{{ companyInfo.phone }}">{{ companyInfo.phone }}</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Quick Links Section -->
+    <div class="footer-section">
+      <h4 class="section-title">Quick Links</h4>
+      <ul class="footer-links">
+        @for (link of quickLinks; track link){
+          <li>
+            <a [href]="link.url" class="footer-link">{{ link.name }}</a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Social Media Section -->
+    <div class="footer-section">
+      <h4 class="section-title">Follow us</h4>
+      <div class="social-links">
+        @for (social of socialLinks ; track social) {
+          <a [href] ="social.url"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="social-icon">
+            <fa-icon [icon]="social.icon" size="lg"></fa-icon>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</footer>

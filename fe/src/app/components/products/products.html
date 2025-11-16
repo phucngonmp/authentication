@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="filters">
+    <div class="filter-group">
+      <input
+        type="text"
+        class="search-box"
+        placeholder="Search plants..."
+        (input)="onSearchChange()"
+      >
+    </div>
+
+    <div class="filter-group">
+      <label class="filter-label">Category</label>
+      <div class="filter-options">
+        @for (category of categories; track category.value) {
+          <button  class="filter-btn"
+                   [class.active]="selectedCategory === category.value"
+                   (click)="onCategoryChange(category.value)" >
+            {{ category.label }}
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="results-count">{{ filteredProducts.length }} plants found</div>
+
+  <div class="products-grid">
+    @if (paginatedProducts.length === 0) {
+      <div class="no-products">
+        No plants found matching your criteria.
+      </div>
+    }
+
+    @for (product of paginatedProducts; track product.id) {
+      <div class="product-card">
+        <img [src]="product.image" [alt]="product.name" class="product-image">
+        <div class="product-info">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <p class="product-category">{{ product.category }}</p>
+          <p class="product-price">\${{ product.price }}</p>
+          <span class="product-difficulty">{{ product.difficulty }}</span>
+          <button class="add-to-cart" (click)="addToCart(product.id)">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (totalPages > 1) {
+    <div class="pagination">
+      <button
+        class="pagination-btn"
+        (click)="changePage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        ←
+      </button>
+
+      @for (page of getPageNumbers(); track page) {
+        <button
+          class="pagination-btn"
+          [class.active]="page === currentPage"
+          (click)="changePage(Number(page))"
+          [disabled]="page === '...'"
+        >
+          {{ page }}
+        </button>
+      }
+
+
+      <button
+        class="pagination-btn"
+        (click)="changePage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        →
+      </button>
+
+      <div class="pagination-info">
+        {{ getStartItem() }}-{{ getEndItem() }} of {{ filteredProducts.length }}
+      </div>
+    </div>
+  }
+</div>
